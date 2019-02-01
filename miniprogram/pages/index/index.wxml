@@ -14,18 +14,6 @@
     </view>
   </view>
 
-
-  <!-- 上传图片 -->
-  <view class="uploader">
-    <view class="uploader-text" bindtap="doUpload">
-      <text>上传图片</text>
-    </view>
-    <view class="uploader-container" wx:if="{{imgUrl}}">
-      <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
-    </view>
-  </view>
-
-
   <!-- 操作数据库 -->
   <view class="uploader">
     <navigator url="../databaseGuide/databaseGuide" open-type="navigate" class="uploader-text">
@@ -40,4 +28,17 @@
     </navigator>
   </view>
 
+  <view>today aim</view>
+  <view>score:{{score}}</view>
+  <view>detail</view>
+  <view class="uploader">
+    <!-- <navigator url="../addItem/addItem" open-type="navigate" class="uploader-text"> -->
+      <text>add</text>
+      <button size="mini" type="default" bindtap="onAdd">新增记录</button>
+    <text class="p" wx:if="{{id}}">新增的记录 _id 为：{{id}}</text>
+    
+    <!-- </navigator> -->
+  </view>
+  <button size="mini" type="default" bindtap="onQuery">查询记录</button>
+    <text class="code" wx:if="{{queryResult}}">{{queryResult}}</text>
 </view>

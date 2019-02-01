@@ -1,4 +1,5 @@
 //index.js
+import { formatDate } from '../../util/common'
 const app = getApp()
 
 Page({
@@ -7,7 +8,10 @@ Page({
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    requestResult: '',
+    score:0,
+    detail:[],
+    aim:0,
   },
 
   onLoad: function() {
@@ -67,54 +71,95 @@ Page({
     })
   },
 
-  // 上传图片
-  doUpload: function () {
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-
-        wx.showLoading({
-          title: '上传中',
-        })
-
-        const filePath = res.tempFilePaths[0]
-        
-        // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-
+  onQuery: function() {
+    const date = formatDate(new Date());
+    const db = wx.cloud.database()
+    // 查询当前用户所有的 counters
+    db.collection('daily').where({
+      // _openid: this.data.openid
+      date,
+    }).get({
+      success: res => {
+        // this.setData({
+        //   queryResult: JSON.stringify(res.data, null, 2)
+        // })
+        // const r = JSON.stringify(res.data, null, 2);
+        const r = res.data[0];
+        if (r) {
+          this.setData({
+            todayId: r._id,
+            score: r.score,
+            detail: r.detail,
+          })
+        }
+        console.log('[数据库] [查询记录] 成功: ', r)
       },
-      fail: e => {
-        console.error(e)
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
       }
     })
+  },
+  onAdd: function () {
+    const date = formatDate(new Date());
+    console.log(date);
+    const db = wx.cloud.database()
+    const { todayId, score, detail } =this.data;
+    const newItem = { description:"clean", weight: 1 };
+    if (todayId) {
+      console.log
+      detail.push(newItem);
+      db.collection('daily').doc(todayId).update({
+        data: {
+          score: score+1,
+          detail,
+        },
+        success: res => {
+          console.log(res)
+          this.setData({
+            score: score+1,
+            detail,
+          })
+        },
+        fail: err => {
+          icon: 'none',
+          console.error('[数据库] [更新记录] 失败：', err)
+        }
+      })
+    } else {
+      db.collection('daily').add({
+        data: {
+          date,
+          ispass: false,
+          score: 1,
+          detail: [newItem],
+        },
+        success: res => {
+          // 在返回结果中会包含新创建的记录的 _id
+          console.log(res)
+          this.setData({
+            todayId: res._id,
+            score: 1,
+            detail: [newItem],
+          })
+          wx.showToast({
+            title: '新增记录成功',
+          })
+          console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '新增记录失败'
+          })
+          console.error('[数据库] [新增记录] 失败：', err)
+        }
+      })
+    }
+    
   },
 
 })
