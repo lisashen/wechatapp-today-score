@@ -15,30 +15,72 @@
   </view>
 
   <!-- 操作数据库 -->
-  <view class="uploader">
+  <!-- <view class="uploader">
     <navigator url="../databaseGuide/databaseGuide" open-type="navigate" class="uploader-text">
       <text>前端操作数据库</text>
     </navigator>
-  </view>
+  </view> -->
 
   <!-- 新建云函数 -->
-  <view class="uploader">
+  <!-- <view class="uploader">
     <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
       <text>快速新建云函数</text>
     </navigator>
-  </view>
-
-  <view>today aim</view>
-  <view>score:{{score}}</view>
-  <view>detail</view>
-  <view class="uploader">
-    <!-- <navigator url="../addItem/addItem" open-type="navigate" class="uploader-text"> -->
-      <text>add</text>
-      <button size="mini" type="default" bindtap="onAdd">新增记录</button>
-    <text class="p" wx:if="{{id}}">新增的记录 _id 为：{{id}}</text>
+  </view> -->
+  <view class="part-1">
+    <view>每日目标: {{aim}}</view>
+    <view>今日得分: {{score}}</view>
+    <block wx:if="{{detail.length}}">
+      <view>计分详情</view>
+      <view wx:for="{{detail}}">
+        {{item.description}}: {{item.weight}}
+      </view>
+    </block>
     
-    <!-- </navigator> -->
+    
   </view>
-  <button size="mini" type="default" bindtap="onQuery">查询记录</button>
-    <text class="code" wx:if="{{queryResult}}">{{queryResult}}</text>
+  
+
+  <!-- <view class="uploader"> -->
+    <!-- <navigator url="../addItem/addItem" open-type="navigate" class="uploader-text"> -->
+      <!-- <text>新增记录</text> -->
+      <button size="mini" type="default" bindtap="openAddModal">新增记录</button>
+    <text class="p" wx:if="{{id}}">新增的记录 _id 为：{{id}}</text> 
+    <!-- </navigator> -->
+  <!-- </view> -->
+  <!-- <button size="mini" type="default" bindtap="onQueryToday">查询记录</button>
+    <text class="code" wx:if="{{queryResult}}">{{queryResult}}</text> -->
+
+  <view class="{{showAddModal?'add-modal':'hide-add-modal'}}">
+    <view class="mask-bg" bindtap="closeAddModal">
+    </view>
+    <view class="adder">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <label class="radio" wx:for="{{labels}}">
+        <radio value="{{item.id}}"  />
+        {{item.description}}
+      </label>
+      <label>
+        <radio value="0" />
+        其他
+      </label>
+    </radio-group>
+    <view wx:if="{{showCustonLabel}}">
+      <input 
+        focus maxlength="15" 
+        placeholder="做了啥" 
+        class="add-input"
+        bindinput="bindAddInput"
+      > </input>
+      <picker bindchange="bindPickerChange" value="{{weightIndex}}" range="{{weights}}">
+        <view class="picker">
+          分值：{{weights[weightIndex]}}
+        </view>
+      </picker>
+      <button bindtap="addNewItem">确认添加</button>
+      <button bindtap="closeAddModal">取消</button>
+    </view>
+    
+    </view>
+  </view>
 </view>

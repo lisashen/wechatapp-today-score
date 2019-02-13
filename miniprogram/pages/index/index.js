@@ -12,6 +12,9 @@ Page({
     score:0,
     detail:[],
     aim:0,
+    labels:[],
+    weights: [1,2,3,4,5,6,7],
+    weightIndex: 0
   },
 
   onLoad: function() {
@@ -38,6 +41,7 @@ Page({
         }
       }
     })
+    this.onQueryToday();
   },
 
   onGetUserInfo: function(e) {
@@ -49,7 +53,6 @@ Page({
       })
     }
   },
-
   onGetOpenid: function() {
     // 调用云函数
     wx.cloud.callFunction({
@@ -70,8 +73,7 @@ Page({
       }
     })
   },
-
-  onQuery: function() {
+  onQueryToday: function() {
     const date = formatDate(new Date());
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
@@ -102,64 +104,142 @@ Page({
         console.error('[数据库] [查询记录] 失败：', err)
       }
     })
-  },
-  onAdd: function () {
-    const date = formatDate(new Date());
-    console.log(date);
-    const db = wx.cloud.database()
-    const { todayId, score, detail } =this.data;
-    const newItem = { description:"clean", weight: 1 };
-    if (todayId) {
-      console.log
-      detail.push(newItem);
-      db.collection('daily').doc(todayId).update({
-        data: {
-          score: score+1,
-          detail,
-        },
-        success: res => {
-          console.log(res)
+    db.collection('user').where({
+    }).get({
+      success: res => {
+        const r = res.data[0];
+        if (r) {
           this.setData({
+            userId: r._id,
+            aim: r.aim,
+            labels: r.labels,
+          })
+        } else {
+          this.onSetUser(1);
+        }
+        console.log('[user] [查询记录] 成功: ', r)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+  },
+  addNewItem: function () {
+    const date = formatDate(new Date());
+    const db = wx.cloud.database()
+    const { todayId, score, detail, weightIndex, weights, addInputValue } =this.data;
+    if(addInputValue){
+      const newItem = { description:addInputValue, weight:  weights[weightIndex] };
+      if (todayId) {
+        console.log
+        detail.push(newItem);
+        db.collection('daily').doc(todayId).update({
+          data: {
             score: score+1,
             detail,
-          })
-        },
-        fail: err => {
-          icon: 'none',
-          console.error('[数据库] [更新记录] 失败：', err)
-        }
-      })
-    } else {
-      db.collection('daily').add({
-        data: {
-          date,
-          ispass: false,
-          score: 1,
-          detail: [newItem],
-        },
-        success: res => {
-          // 在返回结果中会包含新创建的记录的 _id
-          console.log(res)
-          this.setData({
-            todayId: res._id,
+          },
+          success: res => {
+            console.log(res)
+            this.setData({
+              score: score+1,
+              detail,
+            })
+          },
+          fail: err => {
+            icon: 'none',
+            console.error('[数据库] [更新记录] 失败：', err)
+          }
+        })
+      } else {
+        db.collection('daily').add({
+          data: {
+            date,
+            ispass: false,
             score: 1,
             detail: [newItem],
-          })
-          wx.showToast({
-            title: '新增记录成功',
-          })
-          console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-        },
-        fail: err => {
-          wx.showToast({
-            icon: 'none',
-            title: '新增记录失败'
-          })
-          console.error('[数据库] [新增记录] 失败：', err)
-        }
+          },
+          success: res => {
+            // 在返回结果中会包含新创建的记录的 _id
+            console.log(res)
+            this.setData({
+              todayId: res._id,
+              score: 1,
+              detail: [newItem],
+            })
+            wx.showToast({
+              title: '新增记录成功',
+            })
+            console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+          },
+          fail: err => {
+            wx.showToast({
+              icon: 'none',
+              title: '新增记录失败'
+            })
+            console.error('[数据库] [新增记录] 失败：', err)
+          }
+        })
+      }
+      this.closeAddModal();
+      this.setData({
+        addInputValue:'',
+        weightIndex:0,
       })
     }
     
   },
-
+  onSetUser: function (aim) {
+    const db = wx.cloud.database();
+    db.collection('user').add({
+      data: {
+        aim: aim,
+        labels: [],
+      },
+      success: res => {
+        // 在返回结果中会包含新创建的记录的 _id
+        console.log(res)
+        this.setData({
+          userId: res._id,
+          aim,
+        })
+        wx.showToast({
+          title: '新增记录成功',
+        })
+        console.log('[user] [新增记录] 成功，记录 _id: ', res._id)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '新增记录失败'
+        })
+        console.error('[数据库] [新增记录] 失败：', err)
+      }
+    })
+  },
+  radioChange :function (e) {
+    this.setData({
+      showCustonLabel: e.detail.value === '0'
+    })
+  },
+  bindPickerChange(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      weightIndex: e.detail.value
+    })
+  },
+  bindAddInput(e) {
+    this.setData({
+      addInputValue: e.detail.value
+    })
+  },
+  openAddModal: function () {
+    this.setData({showAddModal: true})
+  },
+  closeAddModal: function () {
+    this.setData({showAddModal: false})
+  }
 })

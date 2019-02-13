@@ -1,4 +1,5 @@
 /**index.wxss**/
+
 page {
   background: #f6f6f6;
   display: flex;
@@ -6,47 +7,50 @@ page {
   justify-content: flex-start;
   height: 100%;
 }
+
 .part-1 {
   padding: 50rpx;
+  view {
+    margin: 20rpx 0;
+  }
 }
-.part-1 view {
-  margin: 20rpx 0;
-}
+
 .hide-add-modal {
-  height: 0;
-  weight: 0;
-  overflow: hidden;
+  height:0;
+  weight:0;
+  overflow:hidden;
 }
 .add-modal {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  .mask-bg {
+    background-color: rgba(0, 0, 0, 0.541);
+    width: 100%;
+    height: 100%;
+  }
+  .adder {
+    box-sizing:border-box;
+    padding: 40rpx;
+    background-color: white;
+    width: 80%;
+    height: 80%;
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    margin:auto;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    .add-input {
+      border: solid 2rpx #888;
+      width: 60%;
+    }
+  }
 }
-.add-modal .mask-bg {
-  background-color: rgba(0, 0, 0, 0.541);
-  width: 100%;
-  height: 100%;
-}
-.add-modal .adder {
-  box-sizing: border-box;
-  padding: 40rpx;
-  background-color: white;
-  width: 80%;
-  height: 80%;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
-.add-modal .adder .add-input {
-  border: solid 2rpx #888;
-  width: 60%;
-}
-.userinfo,
-.uploader,
-.tunnel {
+.userinfo, .uploader, .tunnel {
   margin-top: 40rpx;
   height: 140rpx;
   width: 100%;
@@ -59,6 +63,7 @@ page {
   align-items: center;
   transition: all 300ms ease;
 }
+
 .userinfo-avatar {
   width: 100rpx;
   height: 100rpx;
@@ -67,33 +72,37 @@ page {
   background-size: cover;
   background-color: white;
 }
+
 .userinfo-avatar:after {
   border: none;
 }
+
 .userinfo-nickname {
   font-size: 32rpx;
   color: #007aff;
   background-color: white;
   background-size: cover;
 }
+
 .userinfo-nickname::after {
   border: none;
 }
-.uploader,
-.tunnel {
+
+.uploader, .tunnel {
   height: auto;
   padding: 0 0 0 40rpx;
   flex-direction: column;
   align-items: flex-start;
   box-sizing: border-box;
 }
-.uploader-text,
-.tunnel-text {
+
+.uploader-text, .tunnel-text {
   width: 100%;
   line-height: 52px;
   font-size: 34rpx;
   color: #007aff;
 }
+
 .uploader-container {
   width: 100%;
   height: 400rpx;
@@ -104,13 +113,16 @@ page {
   box-sizing: border-box;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .uploader-image {
   width: 100%;
   height: 360rpx;
 }
+
 .tunnel {
   padding: 0 0 0 40rpx;
 }
+
 .tunnel-text {
   position: relative;
   color: #222;
@@ -121,17 +133,21 @@ page {
   box-sizing: border-box;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .tunnel-text:first-child {
   border-top: none;
 }
+
 .tunnel-switch {
   position: absolute;
   right: 20rpx;
   top: -2rpx;
 }
+
 .disable {
   color: #888;
 }
+
 .service {
   position: fixed;
   right: 40rpx;
@@ -146,13 +162,16 @@ page {
   justify-content: center;
   transition: all 300ms ease;
 }
+
 .service-button {
   position: absolute;
   top: 40rpx;
 }
+
 .service:active {
   box-shadow: none;
 }
+
 .request-text {
   padding: 20rpx 0;
   font-size: 24rpx;

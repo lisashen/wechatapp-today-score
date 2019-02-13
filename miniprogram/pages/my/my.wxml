@@ -1,0 +1,8 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="part-1">
+    <text>每日目标: </text><text wx:if="isEditingAim">{{aim}}</text><input wx:else />
+    <button bindtap="onChangeAim">修改</button>
+  </view>
+      <button size="mini" type="default" bindtap="openAddModal">新增记录</button>
+</view>
