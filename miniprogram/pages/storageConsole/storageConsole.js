@@ -1,6 +1,6 @@
 // pages/storageConsole/storageConsole.js
 
-const app = getApp()
+const app = getApp();
 
 Page({
 
@@ -10,23 +10,22 @@ Page({
     imagePath: '',
   },
 
-  onLoad: function (options) {
-
+  onLoad(options) {
     const {
       fileID,
       cloudPath,
       imagePath,
-    } = app.globalData
+    } = app.globalData;
 
     this.setData({
       fileID,
       cloudPath,
       imagePath,
-    })
+    });
 
-    console.group('文件存储文档')
-    console.log('https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/storage.html')
-    console.groupEnd()
+    console.group('文件存储文档');
+    console.log('https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/storage.html');
+    console.groupEnd();
   },
 
-})
+});

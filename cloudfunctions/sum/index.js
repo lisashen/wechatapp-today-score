@@ -1,7 +1,7 @@
 // 云函数入口文件
-const cloud = require('wx-server-sdk')
+const cloud = require('wx-server-sdk');
 
-cloud.init()
+cloud.init();
 
 // 云函数入口函数
 // exports.main = async (event, context) => {
@@ -16,9 +16,9 @@ cloud.init()
 // }
 // 云函数入口函数
 exports.main = (event, context) => {
-  console.log(event)
-  console.log(context)
+  console.log(event);
+  console.log(context);
   return {
-    sum: event.a + event.b
-  }
-}
+    sum: event.a + event.b,
+  };
+};

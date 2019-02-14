@@ -2,12 +2,12 @@
 Page({
 
   data: {
-    openid: ''
+    openid: '',
   },
 
-  onLoad: function (options) {
+  onLoad(options) {
     this.setData({
-      openid: getApp().globalData.openid
-    })
-  }
-})
+      openid: getApp().globalData.openid,
+    });
+  },
+});
