@@ -56,7 +56,7 @@
     </view>
     <view class="adder">
     <radio-group class="radio-group" bindchange="radioChange">
-      <label class="radio" wx:for="{{labels}}">
+      <label class="radio" wx:for="{{labels}}" wx:key="id">
         <radio value="{{item.id}}"  />
         {{item.description}}
       </label>

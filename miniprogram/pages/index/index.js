@@ -32,11 +32,12 @@ Page({
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
-            success: (res) => {
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo,
-              });
+            success: (r) => {
+              const infoData = {
+                avatarUrl: r.userInfo.avatarUrl,
+                userInfo: r.userInfo,
+              };
+              this.updateLocalAndGlobalData(infoData);
             },
           });
         }
@@ -44,14 +45,21 @@ Page({
     });
     this.onQueryToday();
   },
-
+  onShow() {
+    // 深比较or直接赋值or用一个是否更新过的标志位？
+    const { aim, labels } = app.globalData;
+    if (labels !== undefined && aim !== undefined) {
+      this.setData({ aim, labels });
+    }
+  },
   onGetUserInfo(e) {
     if (!this.logged && e.detail.userInfo) {
-      this.setData({
+      const infoData = {
         logged: true,
         avatarUrl: e.detail.userInfo.avatarUrl,
         userInfo: e.detail.userInfo,
-      });
+      };
+      this.updateLocalAndGlobalData(infoData);
     }
   },
   onGetOpenid() {
@@ -110,11 +118,12 @@ Page({
       success: (res) => {
         const r = res.data[0];
         if (r) {
-          this.setData({
+          const infoData = {
             userId: r._id,
             aim: r.aim,
             labels: r.labels,
-          });
+          };
+          this.updateLocalAndGlobalData(infoData);
         } else {
           this.onSetUser(1);
         }
@@ -138,7 +147,6 @@ Page({
     if (addInputValue) {
       const newItem = { description: addInputValue, weight: weights[weightIndex] };
       if (todayId) {
-        console.log;
         detail.push(newItem);
         db.collection('daily').doc(todayId).update({
           data: {
@@ -243,5 +251,9 @@ Page({
   },
   closeAddModal() {
     this.setData({ showAddModal: false });
+  },
+  updateLocalAndGlobalData(data) {
+    this.setData({ ...data });
+    Object.assign(app.globalData, data);
   },
 });

@@ -1,8 +1,40 @@
-<!--index.wxml-->
+<!-- index.wxml -->
 <view class="container">
   <view class="part-1">
-    <text>每日目标: </text><text wx:if="isEditingAim">{{aim}}</text><input wx:else />
-    <button bindtap="onChangeAim">修改</button>
+    <text>每日目标:</text>
+    <text wx:if="{{!isEditingAim}}">{{aim}}</text>
+    <input wx:else bindinput="bindAimInput" />
+    <button wx:if="{{!isEditingAim}}" bindtap="onEditAim">修改</button>
+    <button wx:else bindtap="onChangeAim">确定</button>
   </view>
-      <button size="mini" type="default" bindtap="openAddModal">新增记录</button>
+  <view class="labels" wx:for="{{labels}}" wx:key="id">
+    <text class="label">{{item.description}}</text>
+    <icon 
+      wx-if="{{isEditingLabels}}" 
+      type="clear" 
+      size="20" 
+      color="grey" 
+      bindtap="onDeleteLabel" 
+      id="{{item.id}}" 
+    />
+  </view>
+  <icon type="info" wx:if="{{isEditingLabels&&!showCustonLabel}}" bindtap="onAddLabel" />
+  <view wx:if="{{showCustonLabel}}">
+    <input 
+      focus maxlength="15" 
+      placeholder="标签名" 
+      class="add-input"
+      bindinput="bindAddInput"
+    > 
+    </input>
+    <picker bindchange="bindPickerChange" value="{{weightIndex}}" range="{{weights}}">
+      <view class="picker">
+        分值：{{weights[weightIndex]}}
+      </view>
+    </picker>
+    <button bindtap="onChangeLabels">确认添加</button>
+    <button bindtap="cancelChangeLabels">取消</button>
+  </view>
+  <button wx:if="{{!isEditingLabels}}" bindtap="onEditLabels">修改</button>
+  <button wx:else bindtap="onStopEditLabels">退出修改</button>
 </view>
