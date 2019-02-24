@@ -33,9 +33,8 @@ Page({
       },
       success: (res) => {
         console.log(res);
-        this.setData({
-          aim: aimInput,
-        });
+        const infoData = { aim: aimInput };
+        this.updateLocalAndGlobalData(infoData);
       },
       fail: (err) => {
         wx.showToast({
@@ -49,23 +48,38 @@ Page({
   onEditLabels() {
     this.setData({ isEditingLabels: true });
   },
+  onEditSingleLabel(e) {
+    console.log(e);
+    const editingLabelId = 1 * e.currentTarget.id;
+    this.setData({ editingLabelId });
+  },
   onStopEditLabels() {
     this.setData({ isEditingLabels: false });
+  },
+  onFinishEditingLabel(e) {
+    const {
+      labels, weightIndex, weights, addInputValue, editingLabelId,
+    } = this.data;
+    if (addInputValue === '' && weights[weightIndex] === labels[editingLabelId].weight) {
+      return;
+    }
+    const newLabel = { id: editingLabelId, description: addInputValue || labels[editingLabelId].description, weight: weights[weightIndex] };
+    const newLabels = labels.map(label => (label.id === editingLabelId ? newLabel : label));
+    this.updateUserLabelInDb(newLabels);
+    this.setData({ editingLabelId: null });
   },
   onDeleteLabel(e) {
     const db = wx.cloud.database();
     const { labels } = this.data;
     const newLabels = labels.filter(item => item.id != e.currentTarget.id);
-    console.log(typeof e.currentTarget.id, newLabels, labels);
     db.collection('user').doc().update({
       data: {
         labels: newLabels,
       },
       success: (res) => {
         console.log(res);
-        this.setData({
-          labels: newLabels,
-        });
+        const infoData = { labels: newLabels };
+        this.updateLocalAndGlobalData(infoData);
       },
       fail: (err) => {
         wx.showToast({
@@ -90,23 +104,24 @@ Page({
     });
   },
   onChangeLabels() {
-    this.setData({ isEditingLabels: false });
-    const db = wx.cloud.database();
-    const _ = db.command;
     const {
       labels, weightIndex, weights, addInputValue,
     } = this.data;
     const newLabelId = labels[labels.length - 1].id + 1;
     const newLabel = { id: newLabelId, description: addInputValue, weight: weights[weightIndex] };
+    const newLabels = labels.concat(newLabel);
+    this.updateUserLabelInDb(newLabels);
+    this.setData({ isEditingLabels: false, showCustonLabel: false, addInputValue: '' });
+  },
+  updateUserLabelInDb(newLabels) {
+    const db = wx.cloud.database();
     db.collection('user').doc().update({
       data: {
-        labels: _.push(newLabel),
+        labels: newLabels,
       },
       success: (res) => {
-        console.log(res);
-        this.setData({
-          labels: labels.concat(newLabel),
-        });
+        const infoData = { labels: newLabels };
+        this.updateLocalAndGlobalData(infoData);
       },
       fail: (err) => {
         wx.showToast({
@@ -115,9 +130,12 @@ Page({
         });
       },
     });
-    this.setData({ showCustonLabel: false });
   },
   cancelChangeLabels() {
     this.setData({ showCustonLabel: false });
+  },
+  updateLocalAndGlobalData(data) {
+    this.setData({ ...data });
+    Object.assign(app.globalData, data);
   },
 });

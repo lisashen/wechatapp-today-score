@@ -2,6 +2,7 @@
 import { formatDate } from '../../util/common';
 
 const app = getApp();
+const CUSTON_ITEM_ID = 0;
 
 Page({
   data: {
@@ -142,60 +143,67 @@ Page({
     const date = formatDate(new Date());
     const db = wx.cloud.database();
     const {
-      todayId, score, detail, weightIndex, weights, addInputValue,
+      todayId, score, detail, weightIndex, weights, addInputValue, checkedNewItemId, labels,
     } = this.data;
-    if (addInputValue) {
-      const newItem = { description: addInputValue, weight: weights[weightIndex] };
-      if (todayId) {
-        detail.push(newItem);
-        db.collection('daily').doc(todayId).update({
-          data: {
-            score: score + 1,
+    let newItem;
+    if (checkedNewItemId !== CUSTON_ITEM_ID) {
+      const a = labels.filter(item => item.id === checkedNewItemId);
+      const { description, weight } = labels.filter(item => item.id === checkedNewItemId)[0];
+      newItem = { description, weight };
+    } else {
+      newItem = { description: addInputValue, weight: weights[weightIndex] };
+    }
+    if (todayId) {
+      detail.push(newItem);
+      db.collection('daily').doc(todayId).update({
+        data: {
+          score: score + newItem.weight,
+          detail,
+        },
+        success: (res) => {
+          console.log(res);
+          this.setData({
+            score: score + newItem.weight,
             detail,
-          },
-          success: (res) => {
-            console.log(res);
-            this.setData({
-              score: score + 1,
-              detail,
-            });
-          },
-          fail: (err) => {
-            'none',
-            console.error('[数据库] [更新记录] 失败：', err);
-          },
-        });
-      } else {
-        db.collection('daily').add({
-          data: {
-            date,
-            ispass: false,
-            score: 1,
+          });
+        },
+        fail: (err) => {
+          'none',
+          console.error('[数据库] [更新记录] 失败：', err);
+        },
+      });
+    } else {
+      db.collection('daily').add({
+        data: {
+          date,
+          ispass: false,
+          score: newItem.weight,
+          detail: [newItem],
+        },
+        success: (res) => {
+          // 在返回结果中会包含新创建的记录的 _id
+          console.log(res);
+          this.setData({
+            todayId: res._id,
+            score: newItem.weight,
             detail: [newItem],
-          },
-          success: (res) => {
-            // 在返回结果中会包含新创建的记录的 _id
-            console.log(res);
-            this.setData({
-              todayId: res._id,
-              score: 1,
-              detail: [newItem],
-            });
-            wx.showToast({
-              title: '新增记录成功',
-            });
-            console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id);
-          },
-          fail: (err) => {
-            wx.showToast({
-              icon: 'none',
-              title: '新增记录失败',
-            });
-            console.error('[数据库] [新增记录] 失败：', err);
-          },
-        });
-      }
-      this.closeAddModal();
+          });
+          wx.showToast({
+            title: '新增记录成功',
+          });
+          console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id);
+        },
+        fail: (err) => {
+          wx.showToast({
+            icon: 'none',
+            title: '新增记录失败',
+          });
+          console.error('[数据库] [新增记录] 失败：', err);
+        },
+      });
+    }
+    this.closeAddModal();
+    if (checkedNewItemId === CUSTON_ITEM_ID) {
       this.setData({
         addInputValue: '',
         weightIndex: 0,
@@ -231,8 +239,10 @@ Page({
     });
   },
   radioChange(e) {
+    const checkedNewItemId = 1 * e.detail.value;
     this.setData({
-      showCustonLabel: e.detail.value === '0',
+      showCustonLabel: checkedNewItemId === CUSTON_ITEM_ID,
+      checkedNewItemId,
     });
   },
   bindPickerChange(e) {
@@ -255,5 +265,35 @@ Page({
   updateLocalAndGlobalData(data) {
     this.setData({ ...data });
     Object.assign(app.globalData, data);
+  },
+  onEditDetails() {
+    this.setData({ isEditingDetails: true });
+  },
+  onDeleteDetail(e) {
+    const db = wx.cloud.database();
+    const { detail, score } = this.data;
+    const deletedId = 1 * e.currentTarget.id;
+    const newScore = score - detail[deletedId].weight;
+    detail.splice(deletedId, 1);
+    db.collection('daily').doc().update({
+      data: {
+        detail,
+        score: newScore,
+      },
+      success: (res) => {
+        console.log(res);
+        const infoData = { detail, score: newScore };
+        this.setData(infoData);
+      },
+      fail: (err) => {
+        wx.showToast({
+          title: '删除失败',
+          icon: 'none',
+        });
+      },
+    });
+  },
+  onFinishEditDetails() {
+    this.setData({ isEditingDetails: false });
   },
 });

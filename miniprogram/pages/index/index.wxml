@@ -32,11 +32,16 @@
     <view>今日得分: {{score}}</view>
     <block wx:if="{{detail.length}}">
       <view>计分详情</view>
-      <view wx:for="{{detail}}">
+      <icon wx:if="{{!isEditingDetails}}" class="iconfont icon-pen" size="20" bindtap="onEditDetails" />
+      <icon wx:else class="iconfont icon-ok" size="20" bindtap="onFinishEditDetails" />
+      <view wx:for="{{detail}}" wx:key="description">
         {{item.description}}: {{item.weight}}
+        <icon wx:if="{{isEditingDetails}}" class="iconfont icon-delete" size="20" bindtap="onDeleteDetail" id="{{index}}" />
       </view>
     </block>
-    
+    <view>
+</view>
+
     
   </view>
   
@@ -77,9 +82,10 @@
           分值：{{weights[weightIndex]}}
         </view>
       </picker>
-      <button bindtap="addNewItem">确认添加</button>
-      <button bindtap="closeAddModal">取消</button>
+      
     </view>
+    <button disabled="{{showCustonLabel&&!addInputValue}}" bindtap="addNewItem">确认添加</button>
+    <button bindtap="closeAddModal">取消</button>
     
     </view>
   </view>

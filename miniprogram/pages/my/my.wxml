@@ -8,33 +8,30 @@
     <button wx:else bindtap="onChangeAim">确定</button>
   </view>
   <view class="labels" wx:for="{{labels}}" wx:key="id">
-    <text class="label">{{item.description}}</text>
-    <icon 
-      wx-if="{{isEditingLabels}}" 
-      type="clear" 
-      size="20" 
-      color="grey" 
-      bindtap="onDeleteLabel" 
-      id="{{item.id}}" 
-    />
+    <block wx:if="{{editingLabelId!==index}}">
+      <text class="label-description" id="{{index}}" bindtap="onEditSingleLabel">
+        {{item.description}}
+      </text>
+      <text class="label-weight">{{item.weight}}</text>
+    </block>
+    <block wx:else>
+      <input focus maxlength="15" value="{{addInputValue||item.description}}" class="add-input" bindinput="bindAddInput"></input>
+      <picker bindchange="bindPickerChange" value="{{weightIndex}}" range="{{weights}}">
+        <view class="picker">分值：{{weights[weightIndex]}}</view>
+      </picker>
+      <icon class="iconfont icon-ok" size="20" bindtap="onFinishEditingLabel" id="{{index}}" />
+    </block>
+    <icon wx:if="{{isEditingLabels}}" class="iconfont icon-delete" size="20" bindtap="onDeleteLabel" id="{{item.id}}" />
   </view>
-  <icon type="info" wx:if="{{isEditingLabels&&!showCustonLabel}}" bindtap="onAddLabel" />
+  <icon class="iconfont icon-plus" wx:if="{{isEditingLabels&&!showCustonLabel}}" bindtap="onAddLabel" />
   <view wx:if="{{showCustonLabel}}">
-    <input 
-      focus maxlength="15" 
-      placeholder="标签名" 
-      class="add-input"
-      bindinput="bindAddInput"
-    > 
-    </input>
+    <input focus maxlength="15" placeholder="标签名" class="add-input" bindinput="bindAddInput"></input>
     <picker bindchange="bindPickerChange" value="{{weightIndex}}" range="{{weights}}">
-      <view class="picker">
-        分值：{{weights[weightIndex]}}
-      </view>
+      <view class="picker">分值：{{weights[weightIndex]}}</view>
     </picker>
     <button bindtap="onChangeLabels">确认添加</button>
     <button bindtap="cancelChangeLabels">取消</button>
   </view>
-  <button wx:if="{{!isEditingLabels}}" bindtap="onEditLabels">修改</button>
+  <icon wx:if="{{!isEditingLabels}}" class="iconfont icon-pen" size="20" bindtap="onEditLabels" />
   <button wx:else bindtap="onStopEditLabels">退出修改</button>
 </view>
