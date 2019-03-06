@@ -1,1 +1,10 @@
 /* pages/my/my.wxss */
+.container {
+    padding: 20rpx;
+}
+.part {
+    margin: 20rpx;
+}
+.label-weight {
+    margin-left: 10rpx;
+}

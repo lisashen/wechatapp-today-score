@@ -1,0 +1,8 @@
+<view>计分历史</view>
+<view wx:for="{{history}}" wx:key="date">
+{{item.date}}: {{item.ispass}}:  {{item.score}}
+<view wx:for="{{item.detail}}" wx:key="description">
+{{item.description}}: {{item.weight}}
+
+</view>
+</view>

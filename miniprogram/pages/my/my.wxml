@@ -1,17 +1,21 @@
 <!-- index.wxml -->
 <view class="container">
-  <view class="part-1">
+  <view class="part">
     <text>每日目标:</text>
     <text wx:if="{{!isEditingAim}}">{{aim}}</text>
     <input wx:else bindinput="bindAimInput" />
-    <button wx:if="{{!isEditingAim}}" bindtap="onEditAim">修改</button>
+    <icon wx:if="{{!isEditingAim}}" class="iconfont icon-pen" size="20" bindtap="onEditAim" />
     <button wx:else bindtap="onChangeAim">确定</button>
+  </view>
+  <view class="part">
+    <view >
+    <text>我的标签</text>
+    <icon wx:if="{{!isEditingLabels}}" class="iconfont icon-pen" size="20" bindtap="onEditLabels" />
+    <button wx:else bindtap="onStopEditLabels">退出修改</button>
   </view>
   <view class="labels" wx:for="{{labels}}" wx:key="id">
     <block wx:if="{{editingLabelId!==index}}">
-      <text class="label-description" id="{{index}}" bindtap="onEditSingleLabel">
-        {{item.description}}
-      </text>
+      <text class="label-description" id="{{index}}" bindtap="onEditSingleLabel">{{item.description}}</text>
       <text class="label-weight">{{item.weight}}</text>
     </block>
     <block wx:else>
@@ -32,6 +36,5 @@
     <button bindtap="onChangeLabels">确认添加</button>
     <button bindtap="cancelChangeLabels">取消</button>
   </view>
-  <icon wx:if="{{!isEditingLabels}}" class="iconfont icon-pen" size="20" bindtap="onEditLabels" />
-  <button wx:else bindtap="onStopEditLabels">退出修改</button>
+</view>
 </view>

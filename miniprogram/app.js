@@ -6,7 +6,12 @@ App({
     } else {
       wx.cloud.init({
         traceUser: true,
-        dev: 'today-score',
+        // dev: {
+        //   database: 'production-213e56',
+        //   functions: 'production-213e56',
+        //   storage: 'production-213e56',
+        // },
+        dev: 'production-213e56',
       });
     }
 
