@@ -5,7 +5,7 @@ const cloud = require('wx-server-sdk');
 
 // 初始化 cloud
 cloud.init({
-  dev: 'production-213e56',
+  env: 'production-213e56',
 });
 
 /**
