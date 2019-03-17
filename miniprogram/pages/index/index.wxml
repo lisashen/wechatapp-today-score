@@ -2,7 +2,7 @@
 <view class="container">
 
   <!-- 用户 openid -->
-  <view class="userinfo">
+  <!-- <view class="userinfo">
     <button 
       open-type="getUserInfo" 
       bindgetuserinfo="onGetUserInfo"
@@ -12,7 +12,7 @@
     <view>
       <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
     </view>
-  </view>
+  </view> -->
 
   <!-- 操作数据库 -->
   <!-- <view class="uploader">

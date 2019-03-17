@@ -12,25 +12,34 @@
     "pages/my/my"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
+    "backgroundColor": "#deecff",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarBackgroundColor": "#deecff",
     "navigationBarTitleText": "每日计分",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f3f8ff"
   },
   "tabBar": {
+    "backgroundColor": "#deecff",
+    "selectedColor": "#84bfde",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "今日计分"
+        "text": "今日计分",
+        "iconPath":"images/today.png",
+        "selectedIconPath": "images/today1.png"
       },
       {
         "pagePath": "pages/history/history",
-        "text": "历史计分"
+        "text": "历史计分",
+        "iconPath":"images/history.png",
+        "selectedIconPath": "images/history1.png"
       },
       {
         "pagePath": "pages/my/my",
-        "text": "我的"
+        "text": "我的",
+        "iconPath":"images/my.png",
+        "selectedIconPath": "images/my1.png"
       }
     ]
   }
