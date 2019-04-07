@@ -7,13 +7,37 @@ page {
   height: 100%;
 }
 
-.part-1 {
-  padding: 50rpx;
+.part {
+  padding: 10px 50rpx;
+}
+.part view {
+  margin: 20rpx 0;
+}
+.part-2 {
+  text-align: center;
+}
+.plus-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 14vw;
+  height: 14vw;
   view {
-    margin: 20rpx 0;
+    border-radius: 50%;
+    box-shadow: 1px 1px 10px #c4c3c3;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    line-height: 14vw;
+    text-align: center;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    .iconfont{
+      font-size: 7vw;
+    }
   }
 }
-
 .hide-add-modal {
   height:0;
   weight:0;
@@ -32,8 +56,9 @@ page {
     box-sizing:border-box;
     padding: 40rpx;
     background-color: white;
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 70%;
+    border-radius: 10px;
     position: fixed;
     left:0;
     right:0;
@@ -43,9 +68,17 @@ page {
     // display: flex;
     // flex-direction: column;
     // justify-content: center;
-    .add-input {
-      border: solid 2rpx #888;
-      width: 60%;
+    // .add-input {
+    //   border: solid 2rpx #888;
+    //   width: 60%;
+    // }
+    display :flex;
+    flex-direction: column;
+    // align-content: space-between;
+    .adder-labels {
+      height: 100%;
+      overflow: auto;
+      font-size: 14px;
     }
   }
 }

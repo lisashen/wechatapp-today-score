@@ -1,1 +1,33 @@
-/* pages/history/history.wxss */
+.history .history-seg {
+  background-color: #f3f8ff;
+  margin: 10px 0;
+  padding: 10px 20px;
+}
+.history .history-seg .title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.history .history-seg .title .date {
+  color: rgba(0, 0, 0, 0.8);
+}
+.history .history-seg .title .score {
+  font-size: 16px;
+  padding-right: 20px;
+}
+.history .history-seg .title .pass-text {
+  color: green;
+  font-size: 12px;
+}
+.history .history-seg .title .unpass-text {
+  color: red;
+}
+.history .history-seg .detail-group {
+  background-color: #e0e2e4;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+.history .history-seg .detail-group .detail {
+  display: flex;
+  justify-content: space-between;
+}

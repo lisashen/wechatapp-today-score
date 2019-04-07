@@ -12,15 +12,13 @@
     "pages/my/my"
   ],
   "window": {
-    "backgroundColor": "#deecff",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#deecff",
+    "navigationBarBackgroundColor": "#f3f8ff",
     "navigationBarTitleText": "每日计分",
-    "navigationBarTextStyle": "black",
-    "backgroundColor": "#f3f8ff"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "backgroundColor": "#deecff",
+    "backgroundColor": "#f3f8ff",
     "selectedColor": "#84bfde",
     "list": [
       {

@@ -2,7 +2,7 @@
 import { formatDate } from '../../util/common';
 
 const app = getApp();
-const CUSTON_ITEM_ID = 0;
+const CUSTOM_ITEM_ID = 0;
 
 Page({
   data: {
@@ -17,6 +17,7 @@ Page({
     labels: [],
     weights: [1, 2, 3, 4, 5, 6, 7],
     weightIndex: 0,
+    customItemId: CUSTOM_ITEM_ID,
   },
 
   onLoad() {
@@ -146,7 +147,7 @@ Page({
       todayId, score, detail, weightIndex, weights, addInputValue, checkedNewItemId, labels,
     } = this.data;
     let newItem;
-    if (checkedNewItemId !== CUSTON_ITEM_ID) {
+    if (checkedNewItemId !== CUSTOM_ITEM_ID) {
       const a = labels.filter(item => item.id === checkedNewItemId);
       const { description, weight } = labels.filter(item => item.id === checkedNewItemId)[0];
       newItem = { description, weight };
@@ -203,7 +204,7 @@ Page({
       });
     }
     this.closeAddModal();
-    if (checkedNewItemId === CUSTON_ITEM_ID) {
+    if (checkedNewItemId === CUSTOM_ITEM_ID) {
       this.setData({
         addInputValue: '',
         weightIndex: 0,
@@ -239,9 +240,9 @@ Page({
     });
   },
   radioChange(e) {
-    const checkedNewItemId = 1 * e.detail.value;
+    const checkedNewItemId = 1 * e.target.dataset.value;
     this.setData({
-      showCustonLabel: checkedNewItemId === CUSTON_ITEM_ID,
+      showCustonLabel: checkedNewItemId === CUSTOM_ITEM_ID,
       checkedNewItemId,
     });
   },

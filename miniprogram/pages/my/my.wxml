@@ -5,13 +5,13 @@
     <text wx:if="{{!isEditingAim}}">{{aim}}</text>
     <input wx:else bindinput="bindAimInput" />
     <icon wx:if="{{!isEditingAim}}" class="iconfont icon-pen" size="20" bindtap="onEditAim" />
-    <button wx:else bindtap="onChangeAim">确定</button>
+    <button wx:else bindtap="onChangeAim" size="mini">确定</button>
   </view>
   <view class="part">
     <view >
     <text>我的标签</text>
     <icon wx:if="{{!isEditingLabels}}" class="iconfont icon-pen" size="20" bindtap="onEditLabels" />
-    <button wx:else bindtap="onStopEditLabels">退出修改</button>
+    <icon wx:else bindtap="onStopEditLabels"  class="iconfont icon-ok" size="20" />
   </view>
   <view class="labels" wx:for="{{labels}}" wx:key="id">
     <block wx:if="{{editingLabelId!==index}}">
@@ -27,14 +27,16 @@
     </block>
     <icon wx:if="{{isEditingLabels}}" class="iconfont icon-delete" size="20" bindtap="onDeleteLabel" id="{{item.id}}" />
   </view>
-  <icon class="iconfont icon-plus" wx:if="{{isEditingLabels&&!showCustonLabel}}" bindtap="onAddLabel" />
+  <icon class="iconfont icon-plus-circle" wx:if="{{isEditingLabels&&!showCustonLabel}}" bindtap="onAddLabel" />
   <view wx:if="{{showCustonLabel}}">
     <input focus maxlength="15" placeholder="标签名" class="add-input" bindinput="bindAddInput"></input>
     <picker bindchange="bindPickerChange" value="{{weightIndex}}" range="{{weights}}">
       <view class="picker">分值：{{weights[weightIndex]}}</view>
     </picker>
-    <button bindtap="onChangeLabels">确认添加</button>
-    <button bindtap="cancelChangeLabels">取消</button>
+    <view class="ok-cancel-button"> 
+    <button bindtap="onChangeLabels" size="mini">确认添加</button>
+    <button bindtap="cancelChangeLabels" size="mini">取消</button>
+    </view>
   </view>
 </view>
 </view>

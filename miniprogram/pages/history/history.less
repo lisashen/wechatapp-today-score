@@ -1,0 +1,40 @@
+@blue-dark: #deecff;
+@blue-text: #5f9bee;
+@blue-light: #f3f8ff;
+
+.history {
+    .history-seg {
+        background-color: @blue-light;
+        margin: 10px 0;
+        padding: 10px 20px;
+        .title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            .date {
+                color: rgba(0,0,0,0.8);
+            }
+            .score {
+                font-size: 16px;
+                padding-right: 20px;
+            }
+            .pass-text {
+                color: green;
+                font-size: 12px;
+            }
+            .unpass-text {
+                color: red;
+            }
+        }
+        .detail-group {
+            .detail {
+                display: flex;
+                justify-content: space-between;
+            }
+            background-color: #e0e2e4;
+            border-radius: 5px;
+            padding: 5px 15px;
+        }
+
+    }
+}
