@@ -1,0 +1,7 @@
+<!-- <view class="label {{isChecked?'label-checked':null }}">
+    {{label}}
+</view> -->
+<view class="label {{isChecked?'label-checked':null }}">
+    <text>{{label}}</text>
+    <view class="label-weight" wx:if="{{weight}}">{{weight}}</view>
+</view>

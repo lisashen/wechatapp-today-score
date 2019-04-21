@@ -1,0 +1,26 @@
+.new-item-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.new-item-input .add-input {
+  display: table-cell;
+  vertical-align: middle;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 5px 5px 0;
+  min-height: unset;
+  width: 50%;
+  height: 25px;
+}
+.new-item-input picker {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 0px 5px 5px;
+  width: 30%;
+  height: 25px;
+}

@@ -1,0 +1,30 @@
+.new-item-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    .add-input {
+        // display: inline-flex;
+        // align-items: center;
+        display: table-cell;
+        vertical-align: middle;
+        background-color: rgba(0,0,0,0.1);
+        border-radius: 5px;
+        padding: 5px;
+        margin: 5px 5px 5px 0;
+        min-height: unset;
+        width: 50%;
+        height: 25px; // 这里的文字line-height的方法不起效，莫非是多行文本
+    }
+    picker {
+        display: inline-flex;
+        align-items: center;
+        background-color: rgba(0,0,0,0.1);
+        border-radius: 5px;
+        padding: 5px;
+        margin: 5px 0px 5px 5px;
+        width: 30%;
+        height: 25px;
+    }
+}
+

@@ -1,0 +1,6 @@
+<view class="new-item-input">
+    <input focus maxlength="15" placeholder="做了啥" class="add-input" bindinput="onAddInput"></input>
+    <picker bindchange="onPickerChange" value="{{weightIndex}}" range="{{weights}}">
+        <view class="picker">分值：{{weights[weightIndex]}}</view>
+    </picker>
+</view>

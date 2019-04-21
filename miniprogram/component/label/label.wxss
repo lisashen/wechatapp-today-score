@@ -1,0 +1,31 @@
+.label {
+  height: 24px;
+  line-height: 24px;
+  border-radius: 12px;
+  border: 1px solid #5f9bee;
+  color: #5f9bee;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  margin: 5px;
+}
+.label .label-weight {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: #5f9bee;
+  display: inline-block;
+  color: white;
+  margin: 0 -5px 0 5px;
+  line-height: 16px;
+  text-align: center;
+  font-size: 10px;
+}
+.label-checked {
+  background-color: #5f9bee;
+  color: white;
+}
+.label-checked .label-weight {
+  background-color: white;
+  color: #5f9bee;
+}

@@ -14,17 +14,17 @@
     <icon wx:else bindtap="onStopEditLabels"  class="iconfont icon-ok" size="20" />
   </view>
   <view class="labels" wx:for="{{labels}}" wx:key="id">
-    <block wx:if="{{editingLabelId!==index}}">
+    <view wx:if="{{editingLabelId!==index}}">
       <text class="label-description" id="{{index}}" bindtap="onEditSingleLabel">{{item.description}}</text>
       <text class="label-weight">{{item.weight}}</text>
-    </block>
-    <block wx:else>
+    </view>
+    <view wx:else class="label-edit">
       <input focus maxlength="15" value="{{addInputValue||item.description}}" class="add-input" bindinput="bindAddInput"></input>
       <picker bindchange="bindPickerChange" value="{{weightIndex}}" range="{{weights}}">
         <view class="picker">分值：{{weights[weightIndex]}}</view>
       </picker>
       <icon class="iconfont icon-ok" size="20" bindtap="onFinishEditingLabel" id="{{index}}" />
-    </block>
+    </view>
     <icon wx:if="{{isEditingLabels}}" class="iconfont icon-delete" size="20" bindtap="onDeleteLabel" id="{{item.id}}" />
   </view>
   <icon class="iconfont icon-plus-circle" wx:if="{{isEditingLabels&&!showCustonLabel}}" bindtap="onAddLabel" />

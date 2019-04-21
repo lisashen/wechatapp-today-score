@@ -46,7 +46,9 @@
       <icon wx:if="{{isEditingDetails}}" class="iconfont icon-delete" size="20" bindtap="onDeleteDetail" id="{{index}}" />
     </view>
   </view>
-  <view></view>
+  <view wx:else class="part do-nothing">
+    <view class="tip">今天屁都还没干哇</view>
+    <view class="plus-button-empty" bindtap="openAddModal">干了一件</view></view>
   <view class="plus-button">
     <view bindtap="openAddModal">
       <icon class="iconfont icon-plus" />
@@ -56,29 +58,24 @@
     <view class="mask-bg" bindtap="closeAddModal"></view>
     <view class="adder">
       <view class="adder-labels">
-        <!-- <radio-group class="radio-group" bindchange="radioChange">
-          <label class="radio" wx:for="{{labels}}" wx:key="id">
-            <radio value="{{item.id}}" />
-            {{item.description}}
-          </label>
-          <label>
-            <radio value="0" />
-            其他
-          </label>
-        </radio-group> -->
-        <view class="radio-group" bindtap="radioChange">
-          <view class="label {{checkedNewItemId===item.id?'label-checked':null }}" wx:for="{{labels}}" wx:key="id" data-value="{{item.id}}">
+        <view bindtap="radioChange">
+          <!-- <view class="label {{checkedNewItemId===item.id?'label-checked':null }}" wx:for="{{labels}}" wx:key="id" data-value="{{item.id}}">
             {{item.description}}
           </view>
           <view class="label {{checkedNewItemId===customItemId?'label-checked':null }}" data-value="0" >
             其他
+          </view> -->
+          
+          <label wx:for="{{labels}}" wx:key="id" label="{{item.description}}" weight="{{item.weight}}"  isChecked="{{checkedNewItemId===item.id}}" data-value="{{item.id}}" />
+          <label label="其他" isChecked="{{checkedNewItemId===customItemId}}" data-value="0" />
+        
           </view>
-        </view>
         <view wx:if="{{showCustonLabel}}" class="ok-cancel-button">
-          <input focus maxlength="15" placeholder="做了啥" class="add-input" bindinput="bindAddInput"></input>
+          <!-- <input focus maxlength="15" placeholder="做了啥" class="add-input" bindinput="bindAddInput"></input>
           <picker bindchange="bindPickerChange" value="{{weightIndex}}" range="{{weights}}">
             <view class="picker">分值：{{weights[weightIndex]}}</view>
-          </picker>
+          </picker> -->
+          <newItemInput bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange"/>
         </view>
       </view>
       <view class="ok-cancel-button">

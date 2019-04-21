@@ -1,0 +1,46 @@
+
+@blue-dark: #deecff;
+@blue-text: #5f9bee;
+@blue-light: #f3f8ff;
+.label {
+    // height: 24px;
+    // line-height: 24px;
+    // border-radius: 12px;
+    // border: 1px solid @blue-text;
+    // color: @blue-text;
+    // display: inline-block;
+    // padding: 0 12px;
+    // margin: 5px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 12px;
+    border: 1px solid @blue-text;
+    color: @blue-text;
+    // display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    margin: 5px;
+    
+    .label-weight{
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background-color: @blue-text;
+        display: inline-block;
+        color: white;
+        margin: 0 -5px 0 5px;
+        line-height: 16px;
+        text-align: center;
+        font-size: 10px;
+    }
+}
+.label-checked {
+    background-color: @blue-text;
+    color: white;
+    .label-weight{
+        background-color: white;
+        color: @blue-text;
+    }
+}
+
