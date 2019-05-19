@@ -1,5 +1,5 @@
 // index.js
-import { formatDate } from '../../util/common';
+import { formatDate, updateLocalAndGlobalData } from '../../util/common';
 
 const app = getApp();
 const CUSTOM_ITEM_ID = 0;
@@ -39,7 +39,7 @@ Page({
                 avatarUrl: r.userInfo.avatarUrl,
                 userInfo: r.userInfo,
               };
-              this.updateLocalAndGlobalData(infoData);
+              updateLocalAndGlobalData(this, app, infoData);
             },
           });
         }
@@ -61,7 +61,7 @@ Page({
         avatarUrl: e.detail.userInfo.avatarUrl,
         userInfo: e.detail.userInfo,
       };
-      this.updateLocalAndGlobalData(infoData);
+      updateLocalAndGlobalData(this, app, infoData);
     }
   },
   onGetOpenid() {
@@ -105,6 +105,10 @@ Page({
             detail: r.detail,
           });
         }
+        Object.assign(app.globalData, {
+          todayId: r._id,
+          score: r.score,
+        });
         console.log('[数据库] [查询记录] 成功: ', r);
       },
       fail: (err) => {
@@ -125,7 +129,7 @@ Page({
             aim: r.aim,
             labels: r.labels,
           };
-          this.updateLocalAndGlobalData(infoData);
+          updateLocalAndGlobalData(this, app, infoData);
         } else {
           this.onSetUser(1);
         }
@@ -144,7 +148,7 @@ Page({
     const date = formatDate(new Date());
     const db = wx.cloud.database();
     const {
-      todayId, score, detail, weightIndex, weights, addInputValue, checkedNewItemId, labels,
+      todayId, score, detail, weightIndex, weights, addInputValue, checkedNewItemId, labels, aim,
     } = this.data;
     let newItem;
     if (checkedNewItemId !== CUSTOM_ITEM_ID) {
@@ -156,20 +160,22 @@ Page({
     }
     if (todayId) {
       detail.push(newItem);
+      const newScore = score + newItem.weight;
       db.collection('daily').doc(todayId).update({
         data: {
-          score: score + newItem.weight,
+          score: newScore,
           detail,
+          ispass: newScore >= aim,
         },
         success: (res) => {
           console.log(res);
           this.setData({
-            score: score + newItem.weight,
+            score: newScore,
             detail,
           });
+          Object.assign(app.globalData, { score: newScore });
         },
         fail: (err) => {
-          'none',
           console.error('[数据库] [更新记录] 失败：', err);
         },
       });
@@ -177,7 +183,7 @@ Page({
       db.collection('daily').add({
         data: {
           date,
-          ispass: false,
+          ispass: newItem.weight >= aim,
           score: newItem.weight,
           detail: [newItem],
         },
@@ -189,6 +195,7 @@ Page({
             score: newItem.weight,
             detail: [newItem],
           });
+          Object.assign(app.globalData, { score: newItem.weigh });
           wx.showToast({
             title: '新增记录成功',
           });
@@ -263,10 +270,6 @@ Page({
   },
   closeAddModal() {
     this.setData({ showAddModal: false });
-  },
-  updateLocalAndGlobalData(data) {
-    this.setData({ ...data });
-    Object.assign(app.globalData, data);
   },
   onEditDetails() {
     this.setData({ isEditingDetails: true });

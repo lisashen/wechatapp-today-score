@@ -11,3 +11,9 @@ export const formatDate = (date) => {
   }
   return (myyear + mymonth + myweekday);// 想要什么格式都可以随便自己拼
 };
+
+export const updateLocalAndGlobalData = (that, app, data) => {
+  that.setData({ ...data });
+  Object.assign(app.globalData, data);
+}
+;

@@ -15,7 +15,7 @@ Page({
     weightIndex: 0,
     isEditingAim: false,
   },
-  onLoad() {
+  onShow() {
     this.setData({ ...app.globalData });
     this.onQueryToday();
   },

@@ -1,17 +1,23 @@
 <view class="container">
   <view class="part">
     <text>每日目标:</text>
-    <text wx:if="{{!isEditingAim}}">{{aim}}</text>
-    <input wx:else bindinput="bindAimInput" />
-    <icon wx:if="{{!isEditingAim}}" class="iconfont icon-pen" size="20" bindtap="onEditAim" />
-    <button wx:else bindtap="onChangeAim" size="mini">确定</button>
+    <block wx:if="{{!isEditingAim}}">
+      <text >{{aim}}</text>
+      <icon  class="iconfont icon-pen" size="20" bindtap="onEditAim" />
+    </block>
+    <block wx:else>
+      <view class="change-aim-input">
+      <input class="add-input" value="{{aim}}" bindinput="bindAimInput" />
+      <button bindtap="onChangeAim" size="mini">确定</button>
+      </view>
+    </block>
   </view>
   <view class="part">
     <view>
       <text>我的标签</text>
       <icon wx:if="{{!isEditingLabels}}" class="iconfont icon-pen" size="20" bindtap="onEditLabels" />
       <icon wx:else bindtap="onStopEditLabels" class="iconfont icon-ok" size="20" />
-    <icon class="iconfont icon-plus-circle" wx:if="{{isEditingLabels&&!showCustonLabel}}" bindtap="onAddLabel" />
+      <icon class="iconfont icon-plus-circle" wx:if="{{isEditingLabels&&!showCustonLabel}}" bindtap="onAddLabel" />
     </view>
     <view wx:if="{{showCustonLabel}}">
       <newItemInput weightIndex="{{weightIndex}}" bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange" />
@@ -26,10 +32,9 @@
         <icon class="iconfont icon-ok" size="20" bindtap="onFinishEditingLabel" id="{{idx}}" />
       </view>
       <view wx:else>
-        <label wx:for="{{[label]}}" wx:key="id" label="{{item.description}}" weight="{{item.weight}}" isChecked="{{checkedNewItemId===item.id}}" data-value="{{item.id}}" id="{{idx}}" bindtap="onEditSingleLabel"/>
+        <label wx:for="{{[label]}}" wx:key="id" label="{{item.description}}" weight="{{item.weight}}" isChecked="{{checkedNewItemId===item.id}}" data-value="{{item.id}}" id="{{idx}}" bindtap="onEditSingleLabel" />
       </view>
       <icon wx:if="{{isEditingLabels&&!showCustonLabel}}" class="iconfont icon-delete" size="20" bindtap="onDeleteLabel" id="{{label.id}}" />
     </view>
-    
   </view>
 </view>

@@ -1,3 +1,5 @@
+import { updateLocalAndGlobalData } from '../../util/common';
+
 const app = getApp();
 
 Page({
@@ -15,7 +17,7 @@ Page({
     weightIndex: 0,
     isEditingAim: false,
   },
-  onLoad() {
+  onShow() {
     this.setData({ ...app.globalData });
   },
   onEditAim() {
@@ -26,23 +28,35 @@ Page({
   },
   onChangeAim() {
     const db = wx.cloud.database();
-    const { aimInput } = this.data;
-    db.collection('user').doc().update({
-      data: {
-        aim: aimInput,
-      },
-      success: (res) => {
-        console.log(res);
-        const infoData = { aim: aimInput };
-        this.updateLocalAndGlobalData(infoData);
-      },
-      fail: (err) => {
-        wx.showToast({
-          title: '修改失败',
-          icon: 'none',
-        });
-      },
-    });
+    const { aimInput, todayId, score } = this.data;
+    if (aimInput) {
+      db.collection('user').doc().update({
+        data: {
+          aim: aimInput,
+        },
+        success: (res) => {
+          console.log(res);
+          const infoData = { aim: aimInput };
+          updateLocalAndGlobalData(this, app, infoData);
+          if (todayId) {
+            db.collection('daily').doc(todayId).update({
+              data: {
+                ispass: score >= aimInput,
+              },
+              fail: (err) => {
+                console.error('[数据库] [更新记录] 失败：', err);
+              },
+            });
+          }
+        },
+        fail: (err) => {
+          wx.showToast({
+            title: '修改失败',
+            icon: 'none',
+          });
+        },
+      });
+    }
     this.setData({ isEditingAim: false });
   },
   onEditLabels() {
@@ -80,7 +94,7 @@ Page({
       success: (res) => {
         console.log(res);
         const infoData = { labels: newLabels };
-        this.updateLocalAndGlobalData(infoData);
+        updateLocalAndGlobalData(this, app, infoData);
       },
       fail: (err) => {
         wx.showToast({
@@ -124,7 +138,7 @@ Page({
       },
       success: (res) => {
         const infoData = { labels: newLabels };
-        this.updateLocalAndGlobalData(infoData);
+        updateLocalAndGlobalData(this, app, infoData);
       },
       fail: (err) => {
         wx.showToast({
@@ -136,10 +150,6 @@ Page({
   },
   cancelChangeLabels() {
     this.setData({ showCustonLabel: false, editingLabelId: null });
-  },
-  updateLocalAndGlobalData(data) {
-    this.setData({ ...data });
-    Object.assign(app.globalData, data);
   },
   onHide() {
     this.setData({

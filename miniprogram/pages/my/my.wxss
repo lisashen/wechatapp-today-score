@@ -1,3 +1,14 @@
+.add-input {
+  display: inline-block;
+  vertical-align: middle;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 5px 5px 0;
+  min-height: unset;
+  width: 50%;
+  height: 25px;
+}
 page {
   display: flex;
   flex-direction: column;
@@ -15,5 +26,9 @@ page {
 .my-label {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.change-aim-input {
+  display: flex;
   align-items: center;
 }
