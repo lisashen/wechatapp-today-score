@@ -13,12 +13,12 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#f3f8ff",
+    "navigationBarBackgroundColor": "#F0F9FC",
     "navigationBarTitleText": "每日计分",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "backgroundColor": "#f3f8ff",
+    "backgroundColor": "#ffffff",
     "selectedColor": "#84bfde",
     "list": [
       {

@@ -9,6 +9,12 @@ App({
       });
     }
 
-    this.globalData = {};
+    this.globalData = {
+      theme: {
+        green: '#5bcf6c',
+        yellow: '#ffda44',
+
+      },
+    };
   },
 });

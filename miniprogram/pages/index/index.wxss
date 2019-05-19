@@ -23,10 +23,10 @@ page {
 }
 .plus-button view {
   border-radius: 50%;
-  box-shadow: 1px 1px 10px #89bbd6;
+  box-shadow: 1px 1px 10px #1EA8EF;
   width: 100%;
   height: 100%;
-  background-color: #89bbd6;
+  background-color: #1EA8EF;
   line-height: 14vw;
   text-align: center;
 }
@@ -47,13 +47,13 @@ page {
   height: 32px;
   line-height: 32px;
   border-radius: 20px;
-  border: 1px solid #5f9bee;
-  color: #5f9bee;
+  border: 1px solid #46B1EC;
+  color: #46B1EC;
   display: inline-flex;
   align-items: center;
   padding: 4px 12px;
   margin: 5px;
-  box-shadow: 1px 1px 10px #89bbd6;
+  box-shadow: 1px 1px 10px #1EA8EF;
 }
 .hide-add-modal {
   height: 0;
