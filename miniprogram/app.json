@@ -24,21 +24,22 @@
       {
         "pagePath": "pages/index/index",
         "text": "今日计分",
-        "iconPath":"images/today.png",
+        "iconPath": "images/today.png",
         "selectedIconPath": "images/today1.png"
       },
       {
         "pagePath": "pages/history/history",
         "text": "历史计分",
-        "iconPath":"images/history.png",
+        "iconPath": "images/history.png",
         "selectedIconPath": "images/history1.png"
       },
       {
         "pagePath": "pages/my/my",
         "text": "我的",
-        "iconPath":"images/my.png",
+        "iconPath": "images/my.png",
         "selectedIconPath": "images/my1.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

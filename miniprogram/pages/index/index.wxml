@@ -75,7 +75,7 @@
           <picker bindchange="bindPickerChange" value="{{weightIndex}}" range="{{weights}}">
             <view class="picker">分值：{{weights[weightIndex]}}</view>
           </picker> -->
-          <newItemInput bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange"/>
+          <newItemInput weightIndex="{{weightIndex}}" bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange"/>
         </view>
       </view>
       <view class="ok-cancel-button">

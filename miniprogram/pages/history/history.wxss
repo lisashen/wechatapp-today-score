@@ -1,43 +1,44 @@
-.history .history-seg {
+.history-seg {
   background-color: white;
-  margin: 10px 0;
+  margin: 10px 10px;
   padding: 10px 20px;
+  border-radius: 5px;
 }
-.history .history-seg .title {
+.history-seg .title {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.history .history-seg .title .date {
+.history-seg .title .date {
   color: rgba(0, 0, 0, 0.8);
   font-size: 14px;
 }
-.history .history-seg .title .pass-text {
+.history-seg .title .pass-text {
   color: green;
   font-size: 12px;
 }
-.history .history-seg .title .unpass-text {
+.history-seg .title .unpass-text {
   color: #dd0000;
 }
-.history .history-seg .detail-group {
+.history-seg .detail-group {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 5px;
   padding: 5px 15px;
 }
-.history .history-seg .detail-group .detail {
+.history-seg .detail-group .detail {
   display: flex;
   justify-content: space-between;
 }
-.history .history-seg .footer {
+.history-seg .footer {
   margin: 10px 0;
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
   padding: 0 15px;
 }
-.history .history-seg .footer .score-text {
+.history-seg .footer .score-text {
   font-size: 12px;
 }
-.history .history-seg .footer .score {
+.history-seg .footer .score {
   font-size: 16px;
 }

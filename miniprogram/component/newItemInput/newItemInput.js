@@ -6,11 +6,15 @@ Component({
   properties: {
     weightIndex: { // 属性名
       type: Number,
-      value: 1,
+      value: '',
     },
     weights: { // 属性名
       type: Array,
       value: [1, 2, 3, 4, 5, 6, 7],
+    },
+    inputValue: {
+      type: String,
+      value: '',
     },
   },
 

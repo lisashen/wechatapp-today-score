@@ -1,3 +1,7 @@
 {
-    "navigationBarTitleText": "我的"
+    "navigationBarTitleText": "我的",
+    "usingComponents": {
+        "label": "../../component/label/label",
+        "newItemInput": "../../component/newItemInput/newItemInput"
+      }
 }

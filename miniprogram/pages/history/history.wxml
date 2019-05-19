@@ -1,18 +1,20 @@
-<view class="history" wx:for="{{history}}" wx:key="date">
-    <view class="history-seg">
-        <view class="title">
-            <text class="date">{{item.date}}</text>
-            <text ><text class="pass-text {{!item.ispass?'unpass-text':null}}">{{item.ispass? "完成":"未完成"}}</text></text>
+<view class="history-seg" wx:for="{{history}}" wx:key="date">
+    <view class="title">
+        <text class="date">{{item.date}}</text>
+        <text>
+            <text class="pass-text {{!item.ispass?'unpass-text':null}}">
+                {{item.ispass? "完成":"未完成"}}
+            </text>
+        </text>
+    </view>
+    <view class="detail-group">
+        <view class="detail" wx:for="{{item.detail}}" wx:key="description">
+            <text>{{item.description}}</text>
+            <text>{{item.weight}}</text>
         </view>
-        <view class="detail-group">
-            <view class="detail" wx:for="{{item.detail}}" wx:key="description">
-                <text>{{item.description}}</text>
-                <text>{{item.weight}}</text>
-            </view>
-        </view>
-        <view class="footer">
-            <text class="score-text">得分： </text> <text class="score">{{item.score}}</text>
-        </view>
-        
+    </view>
+    <view class="footer">
+        <text class="score-text">得分：</text>
+        <text class="score">{{item.score}}</text>
     </view>
 </view>

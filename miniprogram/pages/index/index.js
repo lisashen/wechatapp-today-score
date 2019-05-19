@@ -298,4 +298,13 @@ Page({
   onFinishEditDetails() {
     this.setData({ isEditingDetails: false });
   },
+  onHide() {
+    this.setData({
+      isEditingDetails: false,
+      weightIndex: 0,
+      addInputValue: '',
+      showAddModal: false,
+      showCustonLabel: false,
+    });
+  },
 });

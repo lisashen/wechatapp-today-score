@@ -49,6 +49,7 @@ Page({
     this.setData({ isEditingLabels: true });
   },
   onEditSingleLabel(e) {
+    if (!this.data.isEditingLabels) return;
     console.log(e);
     const editingLabelId = 1 * e.currentTarget.id;
     this.setData({ editingLabelId });
@@ -111,7 +112,9 @@ Page({
     const newLabel = { id: newLabelId, description: addInputValue, weight: weights[weightIndex] };
     const newLabels = labels.concat(newLabel);
     this.updateUserLabelInDb(newLabels);
-    this.setData({ isEditingLabels: false, showCustonLabel: false, addInputValue: '' });
+    this.setData({
+      isEditingLabels: false, showCustonLabel: false, addInputValue: '', editingLabelId: null,
+    });
   },
   updateUserLabelInDb(newLabels) {
     const db = wx.cloud.database();
@@ -132,10 +135,19 @@ Page({
     });
   },
   cancelChangeLabels() {
-    this.setData({ showCustonLabel: false });
+    this.setData({ showCustonLabel: false, editingLabelId: null });
   },
   updateLocalAndGlobalData(data) {
     this.setData({ ...data });
     Object.assign(app.globalData, data);
+  },
+  onHide() {
+    this.setData({
+      isEditingAim: false,
+      editingLabelId: null,
+      isEditingLabels: false,
+      weightIndex: 0,
+      showCustonLabel: false,
+    });
   },
 });
