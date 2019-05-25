@@ -1,3 +1,7 @@
+<view class="part">
+    <view>总得: {{sum}}</view>
+    <!-- <view>已用: {{spend}}</view> -->
+  </view>
 <view class="history-seg" wx:for="{{history}}" wx:key="date">
     <view class="title">
         <text class="date">{{item.date}}</text>

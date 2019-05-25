@@ -1,3 +1,17 @@
+.add-input {
+  display: inline-block;
+  vertical-align: middle;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 5px 5px 0;
+  min-height: unset;
+  width: 50%;
+  height: 25px;
+}
+.part {
+  padding: 10px 50rpx;
+}
 .history-seg {
   background-color: white;
   margin: 10px 10px;

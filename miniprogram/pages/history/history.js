@@ -24,7 +24,7 @@ Page({
     // 查询当前用户所有的 counters
     db.collection('daily').where({
       // _openid: this.data.openid
-    }).get({
+    }).orderBy('date', 'desc').get({
       success: (res) => {
         // this.setData({
         //   queryResult: JSON.stringify(res.data, null, 2)
@@ -32,8 +32,10 @@ Page({
         // const r = JSON.stringify(res.data, null, 2);
         const r = res.data;
         if (r) {
+          const sum = r.reduce((s, item) => s + item.score, 0);
           this.setData({
             history: r,
+            sum,
           });
         }
         console.log('[数据库] [查询记录] 成功: ', r);
