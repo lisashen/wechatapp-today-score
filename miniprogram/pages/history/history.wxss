@@ -12,6 +12,37 @@
 .part {
   padding: 10px 50rpx;
 }
+page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+}
+.swiper-tab {
+  width: 100%;
+  border-bottom: 2rpx solid #ccc;
+  text-align: center;
+  height: 88rpx;
+  line-height: 88rpx;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+.swiper-tab-item {
+  width: 50%;
+  color: #434343;
+}
+.active {
+  color: #46B1EC;
+  border-bottom: 4rpx solid #46B1EC;
+}
+swiper {
+  text-align: center;
+  flex: 1;
+}
+swiper-item {
+  overflow: auto;
+}
 .history-seg {
   background-color: white;
   margin: 10px 10px;

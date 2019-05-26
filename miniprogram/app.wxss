@@ -1,8 +1,20 @@
 /**app.wxss**/
+.add-input {
+  display: inline-block;
+  vertical-align: middle;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 5px 5px 0;
+  min-height: unset;
+  width: 50%;
+  height: 25px;
+}
 page {
   background-color: #F0F9FC;
   color: rgba(0, 0, 0, 0.61);
   font-size: 16px;
+  height: 100%;
 }
 button {
   color: rgba(0, 0, 0, 0.61);

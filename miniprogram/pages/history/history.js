@@ -14,11 +14,29 @@ Page({
     weights: [1, 2, 3, 4, 5, 6, 7],
     weightIndex: 0,
     isEditingAim: false,
+    currentTab: 0,
   },
   onShow() {
     this.setData({ ...app.globalData });
     this.onQueryToday();
   },
+  swiperTab(e) {
+    const that = this;
+    that.setData({
+      currentTab: e.detail.current,
+    });
+  },
+  // 点击切换
+  clickTab(e) {
+    const that = this;
+    if (this.data.currentTab === e.target.dataset.current) {
+      return;
+    }
+    that.setData({
+      currentTab: e.target.dataset.current,
+    });
+  },
+
   onQueryToday() {
     const db = wx.cloud.database();
     // 查询当前用户所有的 counters
