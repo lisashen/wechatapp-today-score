@@ -2,13 +2,13 @@
   <view class="part">
     <text>每日目标:</text>
     <block wx:if="{{!isEditingAim}}">
-      <text >{{aim}}</text>
-      <icon  class="iconfont icon-pen" size="20" bindtap="onEditAim" />
+      <text>{{aim}}</text>
+      <icon class="iconfont icon-pen" size="20" bindtap="onEditAim" />
     </block>
     <block wx:else>
       <view class="change-aim-input">
-      <input class="add-input" value="{{aim}}" bindinput="bindAimInput" />
-      <button bindtap="onChangeAim" size="mini">确定</button>
+        <input class="add-input" value="{{aim}}" bindinput="bindAimInput" />
+        <button bindtap="onChangeAim" size="mini">确定</button>
       </view>
     </block>
   </view>
@@ -27,12 +27,12 @@
       </view>
     </view>
     <view class="my-label" wx:for="{{labels}}" wx:key="id" wx:for-item="label" wx:for-index="idx">
-      <view wx:if="{{(isEditingLabels)&&!showCustonLabel&&(editingLabelId===idx)}}" class="label-edit">
+      <view wx:if="{{(isEditingLabels)&&!showCustonLabel&&(editingLabelId===label.id)}}" class="label-edit">
         <newItemInput weightIndex="{{weightIndex}}" inputValue="{{label.description}}" bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange" />
-        <icon class="iconfont icon-ok" size="20" bindtap="onFinishEditingLabel" id="{{idx}}" />
+        <icon class="iconfont icon-ok" size="20" bindtap="onFinishEditingLabel" id="{{label.id}}" />
       </view>
       <view wx:else>
-        <label wx:for="{{[label]}}" wx:key="id" label="{{item.description}}" weight="{{item.weight}}" isChecked="{{checkedNewItemId===item.id}}" data-value="{{item.id}}" id="{{idx}}" bindtap="onEditSingleLabel" />
+        <label wx:for="{{[label]}}" wx:key="id" label="{{item.description}}" weight="{{item.weight}}" isChecked="{{checkedNewItemId===item.id}}" data-value="{{item.id}}" id="{{item.id}}" bindtap="onEditSingleLabel" />
       </view>
       <icon wx:if="{{isEditingLabels&&!showCustonLabel}}" class="iconfont icon-delete" size="20" bindtap="onDeleteLabel" id="{{label.id}}" />
     </view>

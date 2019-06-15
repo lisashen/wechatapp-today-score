@@ -260,7 +260,6 @@ Page({
     });
   },
   bindAddInput(e) { // todo
-    console.log('222', e);
     this.setData({
       addInputValue: e.detail.value,
     });
@@ -269,20 +268,27 @@ Page({
     this.setData({ showAddModal: true });
   },
   closeAddModal() {
-    this.setData({ showAddModal: false });
+    this.setData({
+      showAddModal: false,
+      checkedNewItemId: null,
+      showCustonLabel: false,
+      weightIndex: 0,
+      addInputValue: '',
+    });
   },
   onEditDetails() {
     this.setData({ isEditingDetails: true });
   },
   onDeleteDetail(e) {
     const db = wx.cloud.database();
-    const { detail, score } = this.data;
+    const { detail, score, aim } = this.data;
     const deletedId = 1 * e.currentTarget.id;
     const newScore = score - detail[deletedId].weight;
     detail.splice(deletedId, 1);
     db.collection('daily').doc().update({
       data: {
         detail,
+        ispass: newScore >= aim,
         score: newScore,
       },
       success: (res) => {
@@ -307,6 +313,7 @@ Page({
       weightIndex: 0,
       addInputValue: '',
       showAddModal: false,
+      checkedNewItemId: null,
       showCustonLabel: false,
     });
   },

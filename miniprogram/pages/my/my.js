@@ -71,14 +71,17 @@ Page({
   onStopEditLabels() {
     this.setData({ isEditingLabels: false });
   },
-  onFinishEditingLabel(e) {
+  onFinishEditingLabel() {
     const {
       labels, weightIndex, weights, addInputValue, editingLabelId,
     } = this.data;
-    if (addInputValue === '' && weights[weightIndex] === labels[editingLabelId].weight) {
+    const lastLabel = labels.filter(label => (label.id === editingLabelId));
+    const lastWeight = lastLabel.weight;
+    const lastDescription = lastLabel.description;
+    if (addInputValue === '' && weights[weightIndex] === lastWeight) {
       return;
     }
-    const newLabel = { id: editingLabelId, description: addInputValue || labels[editingLabelId].description, weight: weights[weightIndex] };
+    const newLabel = { id: editingLabelId, description: addInputValue || lastDescription, weight: weights[weightIndex] };
     const newLabels = labels.map(label => (label.id === editingLabelId ? newLabel : label));
     this.updateUserLabelInDb(newLabels);
     this.setData({ editingLabelId: null });
