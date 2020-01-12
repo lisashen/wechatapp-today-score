@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/history/history",
+    "pages/bbs/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
@@ -8,7 +10,6 @@
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
     "pages/addItem/addItem",
-    "pages/history/history",
     "pages/my/my"
   ],
   "window": {
@@ -25,6 +26,12 @@
       {
         "pagePath": "pages/index/index",
         "text": "今日计分",
+        "iconPath": "images/today.png",
+        "selectedIconPath": "images/today1.png"
+      },
+      {
+        "pagePath": "pages/bbs/index",
+        "text": "广场",
         "iconPath": "images/today.png",
         "selectedIconPath": "images/today1.png"
       },

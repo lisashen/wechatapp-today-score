@@ -94,4 +94,42 @@ Page({
       },
     });
   },
+  addSpend() {
+    const date = formatDate(new Date());
+    const db = wx.cloud.database();
+    const {
+      score, addInputValue, spendItems,
+    } = this.data;
+    // const newItem = {
+    //   date,
+    //   score,
+    //   content: addInputValue,
+    // };
+    const newItem = {
+      date,
+      score: 6,
+      content: 'sss',
+    };
+    db.collection('spend').add({
+      data: newItem,
+      success: (res) => {
+        // 在返回结果中会包含新创建的记录的 _id
+        console.log(res);
+        this.setData({
+          spendItems: [...spendItems, newItem],
+        });
+        Object.assign(app.globalData, { score: newItem.weigh });
+        wx.showToast({
+          title: '新增记录成功',
+        });
+      },
+      fail: (err) => {
+        wx.showToast({
+          icon: 'none',
+          title: '新增记录失败',
+        });
+        console.error('[数据库] [新增记录] 失败：', err);
+      },
+    });
+  },
 });

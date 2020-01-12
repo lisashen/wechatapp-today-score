@@ -25,8 +25,14 @@
     </navigator>
   </view> -->
   <view class="part part-1">
-    <view>目标: {{aim}}</view>
-    <view>今日得分: {{score}}</view>
+    <view>
+      <view>目标</view>
+      <view>{{aim}}</view>
+    </view>
+    <view>
+      <view>今日得分</view>
+      <view>{{score}}</view>
+    </view>
   </view>
   <!-- <view class="uploader"> -->
   <!-- <navigator url="../addItem/addItem" open-type="navigate" class="uploader-text"> -->
@@ -48,16 +54,28 @@
   </view>
   <view wx:else class="part do-nothing">
     <view class="tip">今天屁都还没干哇</view>
-    <view class="plus-button-empty" bindtap="openAddModal">干了一件</view></view>
+    <view class="plus-button-empty" bindtap="openAddModal">干了一件</view>
+  </view>
   <view class="plus-button">
-    <view bindtap="openAddModal">
+    <view bindtap="showMenu">
       <icon class="iconfont icon-plus" />
     </view>
   </view>
-  <view class="{{showAddModal?'add-modal':'hide-add-modal'}}">
+  <view class="add-button">
+    <view bindtap="openAddModal" class="circle-icon-text {{showMenu? 'show-add-btn':'hide-add-btn'}}">
+      干
+    </view>
+  </view>
+  <view class="spend-button">
+    <view bindtap="openSpendModal" class="circle-icon-text {{showMenu? 'show-spend-btn':'hide-spend-btn'}}">
+      花
+    </view>
+  </view>
+  <view class="{{showAddModal||showSpendModal?'add-modal':'hide-add-modal'}}">
     <view class="mask-bg" bindtap="closeAddModal"></view>
     <view class="adder">
       <view class="adder-labels">
+        <view>{{showAddModal?'干事':'花币'}}</view>
         <view bindtap="radioChange">
           <!-- <view class="label {{checkedNewItemId===item.id?'label-checked':null }}" wx:for="{{labels}}" wx:key="id" data-value="{{item.id}}">
             {{item.description}}
@@ -65,17 +83,11 @@
           <view class="label {{checkedNewItemId===customItemId?'label-checked':null }}" data-value="0" >
             其他
           </view> -->
-          
-          <label wx:for="{{labels}}" wx:key="id" label="{{item.description}}" weight="{{item.weight}}"  isChecked="{{checkedNewItemId===item.id}}" data-value="{{item.id}}" />
+          <label wx:for="{{labels}}" wx:key="id" label="{{item.description}}" weight="{{item.weight}}" isChecked="{{checkedNewItemId===item.id}}" data-value="{{item.id}}" />
           <label label="其他" isChecked="{{checkedNewItemId===customItemId}}" data-value="0" />
-        
-          </view>
+        </view>
         <view wx:if="{{showCustonLabel}}" class="ok-cancel-button">
-          <!-- <input focus maxlength="15" placeholder="做了啥" class="add-input" bindinput="bindAddInput"></input>
-          <picker bindchange="bindPickerChange" value="{{weightIndex}}" range="{{weights}}">
-            <view class="picker">分值：{{weights[weightIndex]}}</view>
-          </picker> -->
-          <newItemInput weightIndex="{{weightIndex}}" bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange"/>
+          <newItemInput stepperNum="{{stepperNum}}" bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange" />
         </view>
       </view>
       <view class="ok-cancel-button">

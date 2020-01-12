@@ -1,18 +1,4 @@
 <view>
-    <view class="sum">
-        <view>
-            <view>累计得分</view>
-            <view>{{sum}}</view>
-        </view>
-        <view>
-            <view>累计支出</view>
-            <view>{{spend}}</view>
-        </view>
-        <view>
-            <view>完成日率</view>
-            <view>{{0}}</view>
-        </view>
-    </view>
     <view class="swiper-tab">
         <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">
             得到
@@ -60,6 +46,7 @@
         </view>
     </swiper-item>
 </swiper>
+<button bindtap="addSpend" size="mini">确认添加</button>
 <view class="sum">
     <view>
         <view>累计得分</view>

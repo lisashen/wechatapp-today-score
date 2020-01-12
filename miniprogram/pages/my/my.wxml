@@ -20,7 +20,7 @@
       <icon class="iconfont icon-plus-circle" wx:if="{{isEditingLabels&&!showCustonLabel}}" bindtap="onAddLabel" />
     </view>
     <view wx:if="{{showCustonLabel}}">
-      <newItemInput weightIndex="{{weightIndex}}" bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange" />
+      <newItemInput stepperNum="{{stepperNum}}" bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange" />
       <view class="ok-cancel-button">
         <button bindtap="onChangeLabels" size="mini">确认添加</button>
         <button bindtap="cancelChangeLabels" size="mini">取消</button>
@@ -28,7 +28,7 @@
     </view>
     <view class="my-label" wx:for="{{labels}}" wx:key="id" wx:for-item="label" wx:for-index="idx">
       <view wx:if="{{(isEditingLabels)&&!showCustonLabel&&(editingLabelId===label.id)}}" class="label-edit">
-        <newItemInput weightIndex="{{weightIndex}}" inputValue="{{label.description}}" bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange" />
+        <newItemInput stepperNum="{{stepperNum}}" inputValue="{{label.description}}" bind:bindAddInput="bindAddInput" bind:bindPickerChange="bindPickerChange" />
         <icon class="iconfont icon-ok" size="20" bindtap="onFinishEditingLabel" id="{{label.id}}" />
       </view>
       <view wx:else>

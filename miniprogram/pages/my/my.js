@@ -13,8 +13,7 @@ Page({
     detail: [],
     aim: 0,
     labels: [],
-    weights: [1, 2, 3, 4, 5, 6, 7],
-    weightIndex: 0,
+    stepperNum: 1,
     isEditingAim: false,
   },
   onShow() {
@@ -73,18 +72,18 @@ Page({
   },
   onFinishEditingLabel() {
     const {
-      labels, weightIndex, weights, addInputValue, editingLabelId,
+      labels, stepperNum, addInputValue, editingLabelId,
     } = this.data;
-    const lastLabel = labels.filter(label => (label.id === editingLabelId));
-    const lastWeight = lastLabel.weight;
-    const lastDescription = lastLabel.description;
-    if (addInputValue === '' && weights[weightIndex] === lastWeight) {
+    const lastLabel = labels.find(label => (label.id === editingLabelId));
+    const lastWeight = lastLabel && lastLabel.weight;
+    const lastDescription = lastLabel && lastLabel.description;
+    this.setData({ editingLabelId: null });
+    if (!addInputValue && stepperNum === lastWeight) {
       return;
     }
-    const newLabel = { id: editingLabelId, description: addInputValue || lastDescription, weight: weights[weightIndex] };
+    const newLabel = { id: editingLabelId, description: addInputValue || lastDescription, weight: stepperNum };
     const newLabels = labels.map(label => (label.id === editingLabelId ? newLabel : label));
     this.updateUserLabelInDb(newLabels);
-    this.setData({ editingLabelId: null });
   },
   onDeleteLabel(e) {
     const db = wx.cloud.database();
@@ -113,7 +112,7 @@ Page({
   bindPickerChange(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value);
     this.setData({
-      weightIndex: e.detail.value,
+      stepperNum: e.detail.value,
     });
   },
   bindAddInput(e) {
@@ -123,10 +122,10 @@ Page({
   },
   onChangeLabels() {
     const {
-      labels, weightIndex, weights, addInputValue,
+      labels, stepperNum, addInputValue,
     } = this.data;
     const newLabelId = labels[labels.length - 1].id + 1;
-    const newLabel = { id: newLabelId, description: addInputValue, weight: weights[weightIndex] };
+    const newLabel = { id: newLabelId, description: addInputValue, weight: stepperNum };
     const newLabels = labels.concat(newLabel);
     this.updateUserLabelInDb(newLabels);
     this.setData({
@@ -159,7 +158,7 @@ Page({
       isEditingAim: false,
       editingLabelId: null,
       isEditingLabels: false,
-      weightIndex: 0,
+      stepperNum: 1,
       showCustonLabel: false,
     });
   },
